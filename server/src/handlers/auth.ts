@@ -179,6 +179,16 @@ function convertToString(uint8: Uint8Array): string {
 }
 
 export const auth = router({
+  currentSignInOption:
+    P.public.query(async () => {
+      const passKeyStored = await db().query.passkeys.findMany();
+      if (passKeyStored.length > 0) {
+        return 'passkey';
+      } else {
+        return 'token';
+      }
+    }),
+
   registrationOptions:
     P.auth.query(
       async () => {

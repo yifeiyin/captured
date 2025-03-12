@@ -20,14 +20,19 @@ const authToken = useStorage('authToken', '');
 const authTokenExpiresAt = useStorage('authTokenExpiresAt', 0);
 
 const authenticate = async () => {
-  const authOptions = await trpc.auth.authenticationOptions.query();
-
-  const authenticationResponse = await startAuthentication({ optionsJSON: authOptions.options });
-
-  const response = await trpc.auth.authenticationVerify.mutate({
-    response: authenticationResponse,
-    jwt: authOptions.jwt,
-  });
+  let response;
+  if (await trpc.auth.currentSignInOption.query() === 'token') {
+    const token = prompt('Enter token');
+    if (!token) return;
+    response = await trpc.auth.authenticateWithToken.mutate(token);
+  } else {
+    const authOptions = await trpc.auth.authenticationOptions.query();
+    const authenticationResponse = await startAuthentication({ optionsJSON: authOptions.options });
+    response = await trpc.auth.authenticationVerify.mutate({
+      response: authenticationResponse,
+      jwt: authOptions.jwt,
+    });
+  }
 
   if (response.token) {
     authTokenExpiresAt.value = response.token.expiresAt;
@@ -37,18 +42,6 @@ const authenticate = async () => {
   load();
 };
 
-const authenticateWithToken = async () => {
-  const token = prompt('Enter token');
-  if (!token) return;
-  const response = await trpc.auth.authenticateWithToken.mutate(token);
-
-  if (response.token) {
-    authTokenExpiresAt.value = response.token.expiresAt;
-    authToken.value = response.token.jwt;
-  }
-
-  load();
-};
 
 const registerNewKey = async () => {
   const regOptions = await trpc.auth.registrationOptions.query();
@@ -119,7 +112,6 @@ const purgeCache = () => {
       <button class="button is-warning" @click="logout()">Logout</button>
       <button class="button" @click="registerNewKey()">Register New Passkey</button>
       <button class="button" @click="purgeCache()">Purge Cached Data</button>
-      <button class="button" @click="authenticateWithToken()">Token Sign In</button>
       <button class="button" @click="load()">Refresh</button>
     </div>
 
