@@ -1,12 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Upload from '../views/admin/Upload.vue'
-import Photo from '../views/Photo.vue'
-import Collections from '../views/Collections.vue'
-import Tags from '../views/Tags.vue'
-import PhotosList from '../views/PhotosList.vue'
 import { startViewTransition } from 'vue-view-transitions'
-import AuthTest from '@/views/admin/AuthTest.vue'
-import Auth from '@/views/admin/Auth.vue'
+
+import Photo from '@/views/Photo.vue'
+import Collections from '@/views/Collections.vue'
+import Tags from '@/views/Tags.vue'
+import PhotosList from '@/views/PhotosList.vue'
 
 
 const router = createRouter({
@@ -49,17 +47,17 @@ const router = createRouter({
     {
       path: '/admin/upload',
       name: 'admin.upload',
-      component: Upload,
+      component: () => import('@/views/admin/Upload.vue'),
     },
     {
       path: '/auth-test',
       name: 'admin.auth-test',
-      component: AuthTest,
+      component: () => import('@/views/admin/AuthTest.vue'),
     },
     {
       path: '/auth',
       name: 'admin.auth',
-      component: Auth,
+      component: () => import('@/views/admin/Auth.vue'),
     },
   ],
   scrollBehavior(to, from, savedPosition) {
