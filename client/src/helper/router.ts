@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Upload from '../views/admin/Upload.vue'
 import Photo from '../views/Photo.vue'
-import AdminCollections from '../views/admin/Collections.vue'
 import Collections from '../views/Collections.vue'
 import Tags from '../views/Tags.vue'
 import PhotosList from '../views/PhotosList.vue'
@@ -51,11 +50,6 @@ const router = createRouter({
       path: '/admin/upload',
       name: 'admin.upload',
       component: Upload,
-    },
-    {
-      path: '/admin/collections',
-      name: 'admin.collections',
-      component: AdminCollections,
     },
     {
       path: '/auth-test',
