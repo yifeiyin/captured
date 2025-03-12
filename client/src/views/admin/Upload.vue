@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDropZone } from '@vueuse/core'
+import { useDropZone, useTitle } from '@vueuse/core'
 import { ref } from 'vue';
 import { trpc } from '../../helper/fetcher';
 
@@ -78,6 +78,7 @@ function generateURL(file: FileWithMetadata) {
 function removeUpload(index: number) {
   selectedFiles.value.splice(index, 1);
 }
+
 </script>
 
 <template>
