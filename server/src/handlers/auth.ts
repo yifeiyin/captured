@@ -16,7 +16,7 @@ const config = () => {
     throw new Error('Secret is empty. For local development, make sure to create .dev.vars file');
   }
   return {
-    origin: env.rpOrigin,
+    rpOrigin: env.rpOrigin,
     rpName: env.rpName,
     rpID: env.rpId,
     jwt: {
@@ -75,7 +75,7 @@ export const authTest = router({
       const verification = await verifyRegistrationResponse({
         response: opts.input.response,
         expectedChallenge: payload.challenge,
-        expectedOrigin: origin,
+        expectedOrigin: config().rpOrigin,
         expectedRPID: config().rpID,
         requireUserPresence: opts.input.requireUserPresence,
         requireUserVerification: opts.input.requireUserVerification,
@@ -153,7 +153,7 @@ export const authTest = router({
       const verification = await verifyAuthenticationResponse({
         response: opts.input.response,
         expectedChallenge: payload.challenge,
-        expectedOrigin: origin,
+        expectedOrigin: config().rpOrigin,
         expectedRPID: config().rpID,
         requireUserVerification: opts.input.requireUserVerification,
         credential: {
@@ -231,7 +231,7 @@ export const auth = router({
       const verification = await verifyRegistrationResponse({
         response: opts.input.response,
         expectedChallenge: payload.challenge,
-        expectedOrigin: origin,
+        expectedOrigin: config().rpOrigin,
         expectedRPID: config().rpID,
         requireUserPresence: true,
         requireUserVerification: false,
@@ -309,7 +309,7 @@ export const auth = router({
       const verification = await verifyAuthenticationResponse({
         response: opts.input.response,
         expectedChallenge: payload.challenge,
-        expectedOrigin: origin,
+        expectedOrigin: config().rpOrigin,
         expectedRPID: config().rpID,
         requireUserVerification: false,
         credential: {
