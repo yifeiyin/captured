@@ -50,16 +50,25 @@ async function fileToBase64(f: File): Promise<string> {
 }
 
 async function submit() {
-  // make the request
-  await trpc.photos.upload.mutate(await Promise.all(selectedFiles.value.map(async x => ({
-    size: x.file.size,
-    type: x.file.type,
-    bytes: await fileToBase64(x.file),
-    mtime: x.file.lastModified,
-    filename: x.file.name,
-  }))));
+  const filesToUpload = [...selectedFiles.value];
 
-  clear();
+  for (const fileWithMetadata of filesToUpload) {
+    const startTime = performance.now();
+    const base64File = await fileToBase64(fileWithMetadata.file);
+
+    await trpc.photos.upload.mutate([{
+      filename: fileWithMetadata.metadata.filename,
+      size: fileWithMetadata.metadata.size,
+      type: fileWithMetadata.metadata.type,
+      mtime: fileWithMetadata.metadata.mtime,
+      bytes: base64File,
+    }]);
+
+    const endTime = performance.now();
+    console.log(`File ${fileWithMetadata.metadata.filename} uploaded in ${((endTime - startTime) / 1000).toFixed(2)} s`);
+
+    selectedFiles.value = selectedFiles.value.filter(f => f.metadata.filename !== fileWithMetadata.metadata.filename);
+  }
 }
 
 function onSelectToUpload(payload: Event) {
