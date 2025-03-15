@@ -1,3 +1,18 @@
+> **Note:** 🛠️ This documentation is a work in progress. 🚧
+>
+> In the mean time, checkout the deployed version at: https://captured.yyin.me/
+
+
+## Monorepo Setup
+```
+bun run setup
+bun run dev
+bun run migrate
+
+bun run prod:migrate
+bun run prod:deploy
+```
+
 ## Frontend
 
 - **Lint the code:**
@@ -61,6 +76,5 @@ Run these from project root.
 
 - **Build app and deploy:**
   ```sh
-  bun --cwd=./client run build --emptyOutDir --outDir ../server/.client_dist
-  bun --cwd=./server run deploy
+  bun --cwd=./client run build --emptyOutDir --outDir ../server/.client_dist && bun --cwd=./server run deploy
   ```
