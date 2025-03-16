@@ -7,7 +7,6 @@
 		"server"
 	],
 	"scripts": {
-		"setup": "bun install --filter '*'",
 		"dev": "bun --filter '*' dev",
 		"migrate": "bun --cwd=./server run ../node_modules/drizzle-kit/bin.cjs --config=src/db/config.local.ts migrate",
 		"prod:migrate": "bun --cwd=./server run ../node_modules/drizzle-kit/bin.cjs --config=src/db/config.prod.ts migrate",
