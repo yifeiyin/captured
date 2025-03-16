@@ -8,7 +8,7 @@ A modern, performant photography website built with Vue 3 and Cloudflare Workers
 
 | 📌                  | 🚀                                     | 📝                                 |
 |---------------------|------------------------------------------------|----------------------------------------------|
-| 🎨 **Frontend**      | [Vue](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/) + [Tailwindcss v4](https://tailwindcss.com/) |  |
+| 🎨 **Frontend**      | [Vue](https://vuejs.org/) + [tailwindcss v4](https://tailwindcss.com/) |  |
 | ⚡ **Backend**        | [tRPC](https://trpc.io/)                       | End-to-end type-safe API                     |
 | ☁️ **Runtime** | [Cloudflare Workers](https://workers.cloudflare.com/) | Serverless backend                           |
 | 🗄 **Database**       | [D1](https://developers.cloudflare.com/d1/) + [Drizzle](https://orm.drizzle.team)    | Cloudflare's SQLite + type-safe ORM |
