@@ -21,13 +21,20 @@ permission.$subscribe(() => {
   fetchPhoto();
 });
 
+
+const error = ref('');
+
 function fetchPhoto() {
   trpc.photos.get.query(photoId).then((data) => {
     item.value = data;
-
     inputs.value.description = data.description;
     inputs.value.collection = data.collection?.id || 0;
     inputs.value.tags = [];
+  }).catch((err) => {
+    if (err.message === 'Photo not found') {
+      localStorage.removeItem(`photo-${photoId}`);
+      error.value = 'Photo not found';
+    }
   });
 
   if (permission.adminView) {
@@ -52,7 +59,8 @@ async function updateTag(tagId: number, selected: boolean) {
 
 async function deletePhoto(id: number) {
   await trpc.photos.delete.mutate(id);
-  router.back();
+  localStorage.removeItem(`photo-${photoId}`);
+  router.push('/');
 }
 
 async function save() {
@@ -91,8 +99,9 @@ const createNew = async (type: 'collection' | 'tag') => {
 </script>
 
 <template>
-  <div v-if="item" class="flex-1 flex flex-col justify-center items-center">
+    <div v-if="error" class="p-4 m-auto w-fit bg-red-900/50 rounded-md text-center">{{ error }}</div>
 
+    <div v-if="item" class="flex-1 flex flex-col justify-center items-center">
     <div v-if="permission.adminView" class="border-2 rounded-xl p-4 m-4 flex flex-col gap-1 text-center">
 
       <div class="flex gap-2 m-auto">
@@ -139,8 +148,5 @@ const createNew = async (type: 'collection' | 'tag') => {
     <div class="">
       {{ item.description }}
     </div>
-
-
-    <!-- <pre class="text-sm text-left"><code>{{ JSON.stringify(item, null, 4) }}</code></pre> -->
   </div>
 </template>
