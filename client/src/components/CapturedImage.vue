@@ -53,7 +53,7 @@ watch(() => permissionStore.adminView, (isAdmin) => {
     <Blurhash class="w-full h-full absolute inset-0 z-[-1]" :width="image.width" :height="image.height" :blurhashString="image.blurhash" />
 
     <picture>
-      <source type="image/webp" :srcset="srcset" :sizes="size ? size + 'vw' : '100vw'" />
+      <source type="image/webp" :srcset="srcset" :sizes="size ? size + 'vw' : 'calc(100vw - .5rem)'" />
       <img loading="lazy" ref="imgRef" :class="[{ 'max-w-screen max-h-[80vh] w-auto h-auto': size === 0 }]" :width="image.width" :height="image.height" :src="fileIdToUrl(image.resources?.[0]?.fileId)" :alt="image.description" />
     </picture>
 
