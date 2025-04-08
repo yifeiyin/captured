@@ -27,6 +27,24 @@ const router = createRouter({
       },
     },
     {
+      path: '/collections/:name/photos/:id',
+      name: 'collections.photos.details',
+      component: Photo,
+      props: route => ({ collection: route.params.name }),
+      meta: {
+        title: 'Photo #:id',
+      },
+    },
+    {
+      path: '/tags/:name/photos/:id',
+      name: 'tags.photos.details',
+      component: Photo,
+      props: route => ({ tag: route.params.name }),
+      meta: {
+        title: 'Photo #:id',
+      },
+    },
+    {
       path: '/collections',
       name: 'collections',
       component: Collections,
