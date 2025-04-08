@@ -94,7 +94,11 @@ const router = createRouter({
   }
 })
 
-router.beforeResolve(async () => {
+router.beforeResolve(async (to, from) => {
+  if (to.path === from.path) return;
+  if (to.path.match(/\/photos\/\d+/) && from.path.match(/\/photos\/\d+/)) {
+    return;
+  }
   const viewTransition = startViewTransition();
   await viewTransition.captured;
 });
