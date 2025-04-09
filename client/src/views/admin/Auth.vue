@@ -107,7 +107,7 @@ const purgeCache = () => {
       </div>
     </div>
 
-    <div class="flex gap-2 justify-center">
+    <div class="flex flex-wrap gap-2 justify-center">
       <button class="button is-primary" @click="authenticate()">Sign In</button>
       <button class="button is-warning" @click="logout()">Logout</button>
       <button class="button" @click="registerNewKey()">Register New Passkey</button>
