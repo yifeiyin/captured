@@ -182,7 +182,7 @@ const createNew = async (type: 'collection' | 'tag') => {
 
     </div>
 
-    <div class="pointer-events-none">
+    <div class="pointer-events-none w-full p-2">
       <CapturedImage :image="item" :size="0" />
     </div>
 
