@@ -106,6 +106,11 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
+    } else if (from.name === 'photos.details' && ['home', 'collections.photos', 'tags.photos'].includes(to.name as string)) {
+      return {
+        el: `a[href="${from.path}"]`,
+        top: 150,
+      }
     } else {
       return { top: 0 };
     }

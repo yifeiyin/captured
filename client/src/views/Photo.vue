@@ -135,12 +135,12 @@ const createNew = async (type: 'collection' | 'tag') => {
 <template>
   <div v-if="error" class="p-4 m-auto w-fit bg-red-900/50 rounded-md text-center">{{ error }}</div>
 
-  <div v-if="item" class="flex-1 flex flex-col justify-center items-center relative">
+  <div class="flex-1 flex flex-col justify-center items-center relative">
     <!-- Navigation Overlay -->
     <div class="absolute inset-0 flex">
       <RouterLink v-if="backRoute" :to="backRoute" class="absolute inset-0 w-full h-full cursor-zoom-out" />
-      <RouterLink v-if="prevRoute" :to="prevRoute" class="absolute left-0 w-1/4 h-full hover:bg-gray-500/20 transition duration-150 cursor-w-resize" />
-      <RouterLink v-if="nextRoute" :to="nextRoute" class="absolute right-0 w-1/4 h-full hover:bg-gray-500/20 transition duration-150 cursor-e-resize" />
+      <RouterLink v-if="prevRoute" :to="prevRoute" replace class="absolute left-0 w-1/4 h-full hover:bg-gray-500/20 transition duration-150 cursor-w-resize" />
+      <RouterLink v-if="nextRoute" :to="nextRoute" replace class="absolute right-0 w-1/4 h-full hover:bg-gray-500/20 transition duration-150 cursor-e-resize" />
     </div>
 
     <div v-if="permission.adminView" class="border-2 rounded-xl p-4 m-4 flex flex-col gap-1 text-center relative z-10 bg-black/50">
@@ -182,7 +182,7 @@ const createNew = async (type: 'collection' | 'tag') => {
 
     </div>
 
-    <div class="pointer-events-none w-full p-2">
+    <div v-if="item" class="pointer-events-none w-full p-2">
       <CapturedImage :image="item" :size="0" />
     </div>
 
