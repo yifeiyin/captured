@@ -19,7 +19,7 @@ trpc.photos.list.query({ collectionName: props.collection === 'none' ? null : pr
   .then((res) => {
     photos.value = res;
 
-    photos.value.forEach(p => {
+    photos.value.forEach((p) => {
       useStorage(`photo-${p.id}`, p);
     })
   })
@@ -55,6 +55,11 @@ const groupedPhotos = computed(() => {
   return looselyOrdered(config.value, photos.value, (x) => x.width > x.height ? '-' : '|');
 });
 
+function imageLinkWithContext(photo: Photo) {
+  return props.collection ? `/collections/${props.collection}/photos/${photo.id}` :
+    props.tag ? `/tags/${props.tag}/photos/${photo.id}` :
+      `/photos/${photo.id}`;
+}
 </script>
 
 <template>
@@ -77,7 +82,7 @@ const groupedPhotos = computed(() => {
   <div class="flex flex-col gap-0.5">
     <div v-for="group in groupedPhotos" :key="group.items.map(x => x.id).join(',')" class="flex flex-row items-center justify-center gap-0.5">
       <div v-for="item of group.items" :key="item.id" :style="{ width: `${100 / config[group.type]}%` }">
-        <RouterLink :to="`/photos/${item.id}`">
+        <RouterLink :to="imageLinkWithContext(item)">
           <CapturedImage :key="item.id" :image="item" :size="100 / config[group.type]" />
         </RouterLink>
       </div>

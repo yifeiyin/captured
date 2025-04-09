@@ -3,7 +3,7 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "mkdir -p .client_dist; wrangler dev",
-		"types": "wrangler types --experimental-include-runtime"
+		"types": "wrangler types"
 	},
 	"dependencies": {
 		"@libsql/client": "^0.14.0",
@@ -18,7 +18,7 @@
 	"devDependencies": {
 		"@types/node": "20.8.3",
 		"@types/service-worker-mock": "^2.0.4",
-		"wrangler": "^4.0.0",
+		"wrangler": "^4.9.1",
 		"@eslint/js": "^9.22.0",
 		"@trpc/client": "^11.0.0-rc.828",
 		"@trpc/server": "^11.0.0-rc.828",

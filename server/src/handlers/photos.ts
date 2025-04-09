@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db, t } from '../db'
 import { eq, isNull, inArray, and } from 'drizzle-orm'
 import { processImage } from '../ImageWorker';
+import { TRPCError } from '@trpc/server';
 
 
 export const photos = router({
@@ -49,7 +50,7 @@ export const photos = router({
   get: P.public.input(z.number()).query(async (opts) => {
     const entry = await db().query.photos.findFirst({ where: eq(t.photos.id, opts.input), with: { tags: true, resources: true, collection: true } });
     if (!entry) {
-      throw new Error('Not found');
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Photo not found' });
     }
 
     return {

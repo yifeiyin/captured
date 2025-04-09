@@ -38,15 +38,15 @@ load();
 
     <div class="flex flex-row flex-wrap gap-1 justify-center items-center">
       <template v-if="tags">
-        <span v-for="item of tags" :key="item.id" class="rounded-sm p-2 m-2 border-2 border-transparent hover:border-white transition">
-          <RouterLink :to="`/tags/${item.name}`">
+        <template v-for="item of tags" :key="item.id">
+          <RouterLink :to="`/tags/${item.name}`" class="rounded-sm p-2 m-2 border-2 border-transparent hover:border-white transition">
             <span class="font-bold" v-view-transition-name="'tag' + item.name">{{ item.name }}</span> <span class="">({{ item.photosCount }})</span>
           </RouterLink>
           <div v-if="permissionStore.adminView">
             <button class="button mr-1 is-info is-small" :disabled="!newTagName" @click="rename(item.id)">R</button>
             <button class="button mr-1 is-danger is-small" @click="remove(item.id)">–</button>
           </div>
-        </span>
+        </template>
       </template>
       <div v-if="permissionStore.adminView">
         <button class="button mr-1 is-success is-small" :disabled="!newTagName" @click="create">+</button>

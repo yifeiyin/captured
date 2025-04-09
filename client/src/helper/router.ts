@@ -27,6 +27,24 @@ const router = createRouter({
       },
     },
     {
+      path: '/collections/:name/photos/:id',
+      name: 'collections.photos.details',
+      component: Photo,
+      props: route => ({ collection: route.params.name }),
+      meta: {
+        title: 'Photo #:id',
+      },
+    },
+    {
+      path: '/tags/:name/photos/:id',
+      name: 'tags.photos.details',
+      component: Photo,
+      props: route => ({ tag: route.params.name }),
+      meta: {
+        title: 'Photo #:id',
+      },
+    },
+    {
       path: '/collections',
       name: 'collections',
       component: Collections,
@@ -88,13 +106,22 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
+    } else if (from.name === 'photos.details' && ['home', 'collections.photos', 'tags.photos'].includes(to.name as string)) {
+      return {
+        el: `a[href="${from.path}"]`,
+        top: 150,
+      }
     } else {
       return { top: 0 };
     }
   }
 })
 
-router.beforeResolve(async () => {
+router.beforeResolve(async (to, from) => {
+  if (to.path === from.path) return;
+  if (to.path.match(/\/photos\/\d+/) && from.path.match(/\/photos\/\d+/)) {
+    return;
+  }
   const viewTransition = startViewTransition();
   await viewTransition.captured;
 });
