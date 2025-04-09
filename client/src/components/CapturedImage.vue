@@ -46,17 +46,19 @@ watch(() => permissionStore.adminView, (isAdmin) => {
 }, { immediate: true });
 
 const standalone = computed(() => props.size === 0);
+
+const loaded = ref(false);
 </script>
 
 
 <template>
   <div :class="['relative overflow-hidden', { 'max-h-[80vh] max-w-full w-auto mx-auto': standalone }]" v-view-transition-name="'img' + image.id" :style="{ aspectRatio: standalone ? image.width / image.height : undefined }">
 
-    <Blurhash class="absolute inset-0 w-full h-full z-[-1] object-contain" :width="image.width" :height="image.height" :blurhashString="image.blurhash" />
+    <Blurhash class="absolute inset-0 w-full h-full z-[-1] object-contain scale-110" :width="image.width" :height="image.height" :blurhashString="image.blurhash" />
 
     <picture>
       <source type="image/webp" :srcset="srcset" :sizes="size ? size + 'vw' : '100vw'" />
-      <img loading="lazy" ref="imgRef" :class="[{ 'absolute inset-0 w-full h-full object-contain': standalone }]" :width="image.width" :height="image.height" :src="fileIdToUrl(image.resources?.[0]?.fileId)" :alt="image.description" />
+      <img ref="imgRef" :class="['opacity-10 transition-opacity duration-75', { 'absolute inset-0 w-full h-full object-contain': standalone, 'opacity-100': loaded }]" :width="image.width" :height="image.height" :src="fileIdToUrl(image.resources?.[0]?.fileId)" :alt="image.description" @load="loaded = true" />
     </picture>
     <div v-view-transition-name="'txt' + image.id" v-if="permissionStore.adminView" class="absolute top-1 left-1 flex flex-col justify-start p-2 border bg-black/50 text-white">
       <span>#{{ image.id }}: {{ image.description }}</span>
