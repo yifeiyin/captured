@@ -23,8 +23,8 @@ const icon = computed(() => authenticated.value ? '🔐' : '🔒');
       <RouterLink class="text-center w-fit p-4" active-class="underline" to="/admin/upload">{{ icon }} Upload</RouterLink>
       <RouterLink class="text-center w-fit p-4" active-class="underline" to="/auth-test">{{ icon }} Passkey Testing</RouterLink>
     </template>
-
-    <button class="text-center w-fit p-4 ml-auto" @click="toggleAdmin()">{{ icon }}</button>
+    <a class="text-center w-fit p-4 md:ml-auto" href="https://github.com/yifeiyin/captured" target="_blank">Site Source <span class="inline-block -scale-x-100">⎋</span></a>
+    <button class="text-center w-fit p-4 " @click="toggleAdmin()" title="Authenticate">{{ icon }}</button>
   </header>
 
   <RouterView :key="$route.fullPath" />
