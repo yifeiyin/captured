@@ -14,12 +14,10 @@ const requireUserVerification = ref(true);
 const register = async () => {
   const regOptions = await trpc.authTest.registrationOptions.query({
     userName: username.value,
-    /* eslint-disable @typescript-eslint/no-explicit-any */
     attestationType: attestationType.value as any,
     authenticatorAttachment: authenticatorAttachment.value as any,
     residentKey: residentKey.value as any,
     userVerification: userVerification.value as any,
-    /* eslint-enable @typescript-eslint/no-explicit-any */
   });
 
   const registrationResponse = await startRegistration({ optionsJSON: regOptions.options });
@@ -38,7 +36,6 @@ const authenticate = async () => {
   const authOptions = await trpc.authTest.authenticationOptions.query(
     {
       userName: username.value,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       userVerification: userVerification.value as any,
     });
 
