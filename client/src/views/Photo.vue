@@ -239,12 +239,12 @@ const createNew = async (type: 'collection' | 'tag') => {
         <label class="label">Tags</label>
         <div class="flex flex-row flex-wrap gap-1 justify-center items-center">
           <span
-            v-for="tag of tags"
-            :key="tag.id"
+            v-for="t of tags"
+            :key="t.id"
             class="rounded-sm p-2 m-2 border-2 border-transparent hover:border-white transition"
-            @click="updateTag(tag.id, !tag.selected)"
+            @click="updateTag(t.id, !t.selected)"
           >
-            {{ tag.name }} {{ tag.selected ? '✓' : '' }}
+            {{ t.name }} {{ t.selected ? '✓' : '' }}
           </span>
         </div>
       </div>

@@ -1,7 +1,6 @@
 const HORIZONTAL = '-' as const;
 const VERTICAL = '|' as const;
-const PHOTO_ORIENTATIONS = [HORIZONTAL, VERTICAL] as const;
-export type PhotoOrientation = (typeof PHOTO_ORIENTATIONS)[number];
+export type PhotoOrientation = typeof HORIZONTAL | typeof VERTICAL;
 export type PhotoGroupingConfig = { [HORIZONTAL]: number; [VERTICAL]: number };
 
 export type PhotoGroupingStrategy = <P>(

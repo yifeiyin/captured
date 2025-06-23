@@ -30,7 +30,7 @@ trpc.photos.list
       useStorage(`photo-${p.id}`, p);
     });
   })
-  .catch((err) => {
+  .catch(() => {
     photos.value = [];
   });
 

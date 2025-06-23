@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDropZone, useTitle } from '@vueuse/core';
+import { useDropZone } from '@vueuse/core';
 import { ref } from 'vue';
 import { trpc } from '../../helper/fetcher';
 

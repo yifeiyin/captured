@@ -7,20 +7,24 @@ import { trpc } from '../../helper/fetcher';
 import { ref } from 'vue';
 
 const username = ref('');
-const attestationType = ref('none');
-const authenticatorAttachment = ref('cross-platform');
-const residentKey = ref('preferred');
-const userVerification = ref('preferred');
+const attestationType = ref<'none' | 'direct' | 'enterprise'>('none');
+const authenticatorAttachment = ref<'platform' | 'cross-platform'>(
+  'cross-platform'
+);
+const residentKey = ref<'discouraged' | 'preferred' | 'required'>('preferred');
+const userVerification = ref<'discouraged' | 'preferred' | 'required'>(
+  'preferred'
+);
 const requireUserPresence = ref(true);
 const requireUserVerification = ref(true);
 
 const register = async () => {
   const regOptions = await trpc.authTest.registrationOptions.query({
     userName: username.value,
-    attestationType: attestationType.value as any,
-    authenticatorAttachment: authenticatorAttachment.value as any,
-    residentKey: residentKey.value as any,
-    userVerification: userVerification.value as any,
+    attestationType: attestationType.value,
+    authenticatorAttachment: authenticatorAttachment.value,
+    residentKey: residentKey.value,
+    userVerification: userVerification.value,
   });
 
   const registrationResponse = await startRegistration({
@@ -40,7 +44,7 @@ const register = async () => {
 const authenticate = async () => {
   const authOptions = await trpc.authTest.authenticationOptions.query({
     userName: username.value,
-    userVerification: userVerification.value as any,
+    userVerification: userVerification.value,
   });
 
   const authenticationResponse = await startAuthentication({

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 import { usePermissionStore } from './helper/stores';
 import { useStorage } from '@vueuse/core';
 import { computed } from 'vue';
