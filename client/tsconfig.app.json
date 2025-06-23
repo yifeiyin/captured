@@ -10,9 +10,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": [
-			"../server/worker-configuration.d.ts"
-		]
-
+    "types": ["../server/worker-configuration.d.ts"]
   }
 }

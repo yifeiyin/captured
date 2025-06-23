@@ -18,7 +18,7 @@ export const P = {
     return opts.next({
       ctx: {
         token: opts.ctx.token,
-      }
-    })
+      },
+    });
   }),
-}
+};

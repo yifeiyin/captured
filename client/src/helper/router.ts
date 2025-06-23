@@ -1,12 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { startViewTransition } from 'vue-view-transitions'
+import { createRouter, createWebHistory } from 'vue-router';
+import { startViewTransition } from 'vue-view-transitions';
 
-import Photo from '@/views/Photo.vue'
-import Collections from '@/views/Collections.vue'
-import Tags from '@/views/Tags.vue'
-import PhotosList from '@/views/PhotosList.vue'
-import { useTitle } from '@vueuse/core'
-
+import Photo from '@/views/Photo.vue';
+import Collections from '@/views/Collections.vue';
+import Tags from '@/views/Tags.vue';
+import PhotosList from '@/views/PhotosList.vue';
+import { useTitle } from '@vueuse/core';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +29,7 @@ const router = createRouter({
       path: '/collections/:name/photos/:id',
       name: 'collections.photos.details',
       component: Photo,
-      props: route => ({ collection: route.params.name }),
+      props: (route) => ({ collection: route.params.name }),
       meta: {
         title: 'Photo #:id',
       },
@@ -39,7 +38,7 @@ const router = createRouter({
       path: '/tags/:name/photos/:id',
       name: 'tags.photos.details',
       component: Photo,
-      props: route => ({ tag: route.params.name }),
+      props: (route) => ({ tag: route.params.name }),
       meta: {
         title: 'Photo #:id',
       },
@@ -64,7 +63,7 @@ const router = createRouter({
       path: '/collections/:name',
       name: 'collections.photos',
       component: PhotosList,
-      props: route => ({ collection: route.params.name }),
+      props: (route) => ({ collection: route.params.name }),
       meta: {
         title: 'Collection :name',
       },
@@ -73,7 +72,7 @@ const router = createRouter({
       path: '/tags/:name',
       name: 'tags.photos',
       component: PhotosList,
-      props: route => ({ tag: route.params.name }),
+      props: (route) => ({ tag: route.params.name }),
       meta: {
         title: 'Tag :name',
       },
@@ -106,16 +105,19 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
-    } else if (from.name === 'photos.details' && ['home', 'collections.photos', 'tags.photos'].includes(to.name as string)) {
+    } else if (
+      from.name === 'photos.details' &&
+      ['home', 'collections.photos', 'tags.photos'].includes(to.name as string)
+    ) {
       return {
         el: `a[href="${from.path}"]`,
         top: 150,
-      }
+      };
     } else {
       return { top: 0 };
     }
-  }
-})
+  },
+});
 
 router.beforeResolve(async (to, from) => {
   if (to.path === from.path) return;
@@ -125,7 +127,6 @@ router.beforeResolve(async (to, from) => {
   const viewTransition = startViewTransition();
   await viewTransition.captured;
 });
-
 
 router.beforeEach((to) => {
   try {
@@ -147,4 +148,4 @@ router.beforeEach((to) => {
   }
 });
 
-export default router
+export default router;

@@ -10,14 +10,16 @@ export const trpc: TRPCClient<AppRouter> = createTRPCClient<AppRouter>({
       url: `${import.meta.env.VITE_BACKEND_URL}/api/`,
       headers() {
         const token = localStorage.getItem('authToken');
-        const tokenExpired = Number.parseInt(localStorage.getItem('authTokenExpiresAt') ?? '0') < Date.now();
+        const tokenExpired =
+          Number.parseInt(localStorage.getItem('authTokenExpiresAt') ?? '0') <
+          Date.now();
         if (!token || tokenExpired) {
           return {};
         }
         return {
           Authorization: `Bearer ${token}`,
-        }
-      }
+        };
+      },
     }),
   ],
 });

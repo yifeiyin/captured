@@ -2,6 +2,7 @@
 	"name": "captured",
 	"version": "0.0.0",
 	"private": true,
+	"type": "module",
 	"workspaces": [
 		"client",
 		"server"
@@ -10,6 +11,20 @@
 		"dev": "bun --filter '*' dev",
 		"migrate": "bun --cwd=./server run ../node_modules/drizzle-kit/bin.cjs --config=src/db/config.local.ts migrate",
 		"prod:migrate": "bun --cwd=./server run ../node_modules/drizzle-kit/bin.cjs --config=src/db/config.prod.ts migrate",
-		"prod:deploy": "bun --cwd=./client run build --emptyOutDir --outDir ../server/.client_dist && bun --cwd=./server run deploy"
+		"prod:deploy": "bun --cwd=./client run build --emptyOutDir --outDir ../server/.client_dist && bun --cwd=./server run deploy",
+		"lint": "eslint . --fix",
+		"lint:check": "eslint ."
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.29.0",
+		"@typescript-eslint/eslint-plugin": "^8.34.1",
+		"@typescript-eslint/parser": "^8.34.1",
+		"eslint": "^9.29.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-prettier": "^5.5.0",
+		"eslint-plugin-vue": "^10.2.0",
+		"globals": "^16.2.0",
+		"prettier": "^3.5.3",
+		"typescript-eslint": "^8.34.1"
 	}
 }

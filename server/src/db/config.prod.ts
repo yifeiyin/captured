@@ -12,5 +12,5 @@ export default defineConfig({
     token: Bun.env.token!,
   },
   // https://github.com/drizzle-team/drizzle-orm/issues/3728
-  tablesFilter: ['/^(?!.*_cf_KV).*$/']
+  tablesFilter: ['/^(?!.*_cf_KV).*$/'],
 });

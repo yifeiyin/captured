@@ -7,7 +7,7 @@ import { P, router } from './trpc';
 
 export const combinedRouter = router({
   '': P.public.query(async () => {
-    return { 'env': process.env };
+    return { env: process.env };
   }),
 
   photos,
@@ -16,7 +16,6 @@ export const combinedRouter = router({
   auth,
   authTest,
   passkeys,
-})
-
+});
 
 export type AppRouter = typeof combinedRouter;

@@ -31,9 +31,3 @@ bun dev
 ```sh
 bun run build
 ```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-bun lint
-```

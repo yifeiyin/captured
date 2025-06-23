@@ -1,17 +1,16 @@
-import './assets/main.css'
+import './assets/main.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import { ViewTransitionsPlugin } from 'vue-view-transitions'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { ViewTransitionsPlugin } from 'vue-view-transitions';
 
+import App from './App.vue';
+import router from './helper/router';
 
-import App from './App.vue'
-import router from './helper/router'
+const app = createApp(App);
 
-const app = createApp(App)
+app.use(createPinia());
+app.use(router);
+app.use(ViewTransitionsPlugin());
 
-app.use(createPinia())
-app.use(router)
-app.use(ViewTransitionsPlugin())
-
-app.mount('#app')
+app.mount('#app');

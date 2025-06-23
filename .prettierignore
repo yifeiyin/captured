@@ -1,0 +1,20 @@
+# Build outputs
+dist/
+dist-ssr/
+coverage/
+.client_dist/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.d.ts
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Bun lockfile
+bun.lock
