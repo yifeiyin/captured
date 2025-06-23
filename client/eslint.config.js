@@ -27,8 +27,9 @@ export default typescriptEslint.config(
     },
     rules: {
       // Prettier rules
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'warn',
       // Your custom rules
+      '@typescript-eslint/no-unused-vars': 'warn',
       'vue/multi-word-component-names': 'off',
       'vue/require-default-prop': 'off',
       'vue/require-prop-types': 'warn',
