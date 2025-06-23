@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
+import {
+  startAuthentication,
+  startRegistration,
+} from '@simplewebauthn/browser';
 import { trpc } from '../../helper/fetcher';
 import { ref } from 'vue';
 
@@ -20,7 +23,9 @@ const register = async () => {
     userVerification: userVerification.value as any,
   });
 
-  const registrationResponse = await startRegistration({ optionsJSON: regOptions.options });
+  const registrationResponse = await startRegistration({
+    optionsJSON: regOptions.options,
+  });
 
   const result = await trpc.authTest.registrationVerify.mutate({
     response: registrationResponse,
@@ -33,13 +38,14 @@ const register = async () => {
 };
 
 const authenticate = async () => {
-  const authOptions = await trpc.authTest.authenticationOptions.query(
-    {
-      userName: username.value,
-      userVerification: userVerification.value as any,
-    });
+  const authOptions = await trpc.authTest.authenticationOptions.query({
+    userName: username.value,
+    userVerification: userVerification.value as any,
+  });
 
-  const authenticationResponse = await startAuthentication({ optionsJSON: authOptions.options });
+  const authenticationResponse = await startAuthentication({
+    optionsJSON: authOptions.options,
+  });
 
   const result = await trpc.authTest.authenticationVerify.mutate({
     response: authenticationResponse,
@@ -49,19 +55,18 @@ const authenticate = async () => {
 
   console.log(result);
 };
-
 </script>
 
 <template>
   <div class="w-80 m-5">
     <div class="field">
       <label class="label">Username (auth)</label>
-      <input class="input is-primary" type="text" v-model="username" />
+      <input v-model="username" class="input is-primary" type="text" />
     </div>
 
     <div class="field">
       <label class="label">Attestation Type</label>
-      <select class="select input is-primary" v-model="attestationType">
+      <select v-model="attestationType" class="select input is-primary">
         <option value="none">None</option>
         <option value="enterprise">Enterprise</option>
         <option value="direct">Direct</option>
@@ -70,7 +75,7 @@ const authenticate = async () => {
 
     <div class="field">
       <label class="label">Authenticator Attachment</label>
-      <select class="select input is-primary" v-model="authenticatorAttachment">
+      <select v-model="authenticatorAttachment" class="select input is-primary">
         <option value="cross-platform">Cross-platform</option>
         <option value="platform">Platform</option>
       </select>
@@ -78,7 +83,7 @@ const authenticate = async () => {
 
     <div class="field">
       <label class="label">Resident Key</label>
-      <select class="select input is-primary" v-model="residentKey">
+      <select v-model="residentKey" class="select input is-primary">
         <option value="preferred">Preferred</option>
         <option value="required">Required</option>
         <option value="discouraged">Discouraged</option>
@@ -87,7 +92,7 @@ const authenticate = async () => {
 
     <div class="field">
       <label class="label">User Verification (auth)</label>
-      <select class="select input is-primary" v-model="userVerification">
+      <select v-model="userVerification" class="select input is-primary">
         <option value="preferred">Preferred</option>
         <option value="required">Required</option>
         <option value="discouraged">Discouraged</option>
@@ -96,25 +101,25 @@ const authenticate = async () => {
 
     <div class="field">
       <label class="checkbox">
-        <input type="checkbox" v-model="requireUserPresence" />
+        <input v-model="requireUserPresence" type="checkbox" />
         Require User Presence
       </label>
     </div>
 
     <div class="field">
       <label class="checkbox">
-        <input type="checkbox" v-model="requireUserVerification" />
+        <input v-model="requireUserVerification" type="checkbox" />
         Require User Verification (auth)
       </label>
     </div>
 
     <div class="buttons">
       <button class="button is-primary" @click="register">Register</button>
-      <button class="button is-primary" @click="authenticate">Authenticate</button>
+      <button class="button is-primary" @click="authenticate">
+        Authenticate
+      </button>
     </div>
   </div>
 
-  <div class="">
-
-  </div>
+  <div class=""></div>
 </template>

@@ -1,5 +1,12 @@
 <template>
-  <img :class="props.class" ref="imgRef" :style="imgStyle" alt="" :width="width" :height="height" />
+  <img
+    ref="imgRef"
+    :class="props.class"
+    :style="imgStyle"
+    alt=""
+    :width="width"
+    :height="height"
+  />
 </template>
 
 <script setup lang="ts">
@@ -26,34 +33,36 @@ const props = defineProps({
   class: {
     type: String,
     default: '',
-  }
+  },
 });
 
 const imgRef = ref<HTMLImageElement>();
 
 onMounted(() => {
-  watch(() => props.blurhashString, (newVal) => {
-    const width = Math.round(props.width / 100);
-    const height = Math.round(props.height / 100);
-    if (newVal) {
-      if (!width || !height || !isBlurhashValid(newVal)) {
-        console.warn('Invalid blurhash/width/height');
-        return;
+  watch(
+    () => props.blurhashString,
+    (newVal) => {
+      const width = Math.round(props.width / 100);
+      const height = Math.round(props.height / 100);
+      if (newVal) {
+        if (!width || !height || !isBlurhashValid(newVal)) {
+          console.warn('Invalid blurhash/width/height');
+          return;
+        }
+        const pixels = decode(newVal, width, height);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx!.createImageData(width, height);
+        imageData.data.set(pixels);
+        ctx!.putImageData(imageData, 0, 0);
+        if (imgRef.value) imgRef.value.src = canvas.toDataURL();
+      } else {
+        if (imgRef.value) imgRef.value.src = '';
       }
-      const pixels = decode(newVal, width, height);
-      const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      const imageData = ctx!.createImageData(width, height);
-      imageData.data.set(pixels);
-      ctx!.putImageData(imageData, 0, 0);
-      if (imgRef.value)
-        imgRef.value.src = canvas.toDataURL();
-    } else {
-      if (imgRef.value)
-        imgRef.value.src = '';
-    }
-  }, { immediate: true });
+    },
+    { immediate: true }
+  );
 });
 </script>

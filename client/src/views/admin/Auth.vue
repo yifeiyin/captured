@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
+import {
+  startAuthentication,
+  startRegistration,
+} from '@simplewebauthn/browser';
 import { trpc } from '../../helper/fetcher';
 import { ref } from 'vue';
 import { useStorage } from '@vueuse/core';
@@ -7,11 +10,14 @@ import { useStorage } from '@vueuse/core';
 const passkeys = ref<Awaited<ReturnType<typeof trpc.passkeys.list.query>>>([]);
 
 function load() {
-  trpc.passkeys.list.query().then((data) => {
-    passkeys.value = data;
-  }).catch(() => {
-    passkeys.value = [];
-  });
+  trpc.passkeys.list
+    .query()
+    .then((data) => {
+      passkeys.value = data;
+    })
+    .catch(() => {
+      passkeys.value = [];
+    });
 }
 
 load();
@@ -21,13 +27,15 @@ const authTokenExpiresAt = useStorage('authTokenExpiresAt', 0);
 
 const authenticate = async () => {
   let response;
-  if (await trpc.auth.currentSignInOption.query() === 'token') {
+  if ((await trpc.auth.currentSignInOption.query()) === 'token') {
     const token = prompt('Enter token');
     if (!token) return;
     response = await trpc.auth.authenticateWithToken.mutate(token);
   } else {
     const authOptions = await trpc.auth.authenticationOptions.query();
-    const authenticationResponse = await startAuthentication({ optionsJSON: authOptions.options });
+    const authenticationResponse = await startAuthentication({
+      optionsJSON: authOptions.options,
+    });
     response = await trpc.auth.authenticationVerify.mutate({
       response: authenticationResponse,
       jwt: authOptions.jwt,
@@ -42,11 +50,12 @@ const authenticate = async () => {
   load();
 };
 
-
 const registerNewKey = async () => {
   const regOptions = await trpc.auth.registrationOptions.query();
 
-  const registrationResponse = await startRegistration({ optionsJSON: regOptions.options });
+  const registrationResponse = await startRegistration({
+    optionsJSON: regOptions.options,
+  });
 
   const response = await trpc.auth.registrationVerify.mutate({
     response: registrationResponse,
@@ -73,7 +82,10 @@ const editPasskey = async (keyId: number) => {
   load();
 };
 
-const shortId = (id: string) => id.slice(0, Math.round(id.length * 0.05)) + '...' + id.slice(-Math.round(id.length * 0.05));
+const shortId = (id: string) =>
+  id.slice(0, Math.round(id.length * 0.05)) +
+  '...' +
+  id.slice(-Math.round(id.length * 0.05));
 
 const logout = () => {
   authToken.value = '';
@@ -86,8 +98,7 @@ const purgeCache = () => {
       localStorage.removeItem(key);
     }
   });
-}
-
+};
 </script>
 
 <template>
@@ -96,11 +107,10 @@ const purgeCache = () => {
       <div v-if="authToken">
         <p>Authenticated.</p>
         <p v-if="authTokenExpiresAt > Date.now()">
-          Token will expire in {{ ((authTokenExpiresAt - Date.now()) / 3600000).toFixed(2) }} hours.
+          Token will expire in
+          {{ ((authTokenExpiresAt - Date.now()) / 3600000).toFixed(2) }} hours.
         </p>
-        <p v-else>
-          Token has expired.
-        </p>
+        <p v-else>Token has expired.</p>
       </div>
       <div v-else>
         <p>No auth token found.</p>
@@ -110,7 +120,9 @@ const purgeCache = () => {
     <div class="flex flex-wrap gap-2 justify-center">
       <button class="button is-primary" @click="authenticate()">Sign In</button>
       <button class="button is-warning" @click="logout()">Logout</button>
-      <button class="button" @click="registerNewKey()">Register New Passkey</button>
+      <button class="button" @click="registerNewKey()">
+        Register New Passkey
+      </button>
       <button class="button" @click="purgeCache()">Purge Cached Data</button>
       <button class="button" @click="load()">Refresh</button>
     </div>
@@ -135,7 +147,11 @@ const purgeCache = () => {
           <tr v-for="passkey in passkeys" :key="passkey.id">
             <td>
               {{ passkey.friendlyName }}
-              <span class="hover:underline cursor-pointer" @click="editPasskey(passkey.id)">✏️</span>
+              <span
+                class="hover:underline cursor-pointer"
+                @click="editPasskey(passkey.id)"
+                >✏️</span
+              >
             </td>
             <td :title="passkey.keyId">{{ shortId(passkey.keyId) }}</td>
             <td :title="passkey.publicKey">{{ shortId(passkey.publicKey) }}</td>
@@ -146,7 +162,12 @@ const purgeCache = () => {
             <td>{{ passkey.counter }}</td>
             <td>{{ passkey.createdAt }}</td>
             <td>
-              <button class="button is-danger" @click="deletePasskey(passkey.id)">Delete</button>
+              <button
+                class="button is-danger"
+                @click="deletePasskey(passkey.id)"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
