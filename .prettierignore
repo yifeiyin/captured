@@ -2,6 +2,7 @@
 dist/
 dist-ssr/
 coverage/
+.client_dist/
 
 # Dependencies
 node_modules/
@@ -14,3 +15,6 @@ node_modules/
 
 # OS files
 .DS_Store
+
+# Bun lockfile
+bun.lock
