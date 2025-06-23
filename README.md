@@ -50,6 +50,20 @@ Create `server/.dev.vars` with:
   bun migrate
   ```
 
+### Code linting and formatting
+
+1. Auto fix issues with ESLint and Prettier:
+  ```bash
+  bun lint
+  ```
+
+2. Select `esbenp.prettier-vscode` as the default formatter to avoid conflicts with other formatters
+
+3. Check for issues without auto-fixing:
+  ```bash
+  bun lint:check
+  ```
+
 ## Deployment
 
 1. Verify Cloudflare credentials in `server/.dev.vars`
