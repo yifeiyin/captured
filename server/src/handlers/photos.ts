@@ -44,10 +44,7 @@ export const photos = router({
         ).map((x) => x.photoId);
         collectionFilter = inArray(t.photos.id, photoList);
       } else {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Invalid filter',
-        });
+        collectionFilter = undefined;
       }
 
       const entries = await db().query.photos.findMany({
